@@ -1,4 +1,5 @@
 src/gateflux/DBConnection.class
+src/gateflux/Session.class
 src/gateflux/AuditFrame.class
 src/gateflux/LoginFrame.class
 src/gateflux/Gateflux.class

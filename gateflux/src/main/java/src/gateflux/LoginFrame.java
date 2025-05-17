@@ -14,28 +14,32 @@ import java.awt.event.*;
 import java.sql.*;
 
 public class LoginFrame extends JFrame {
-    JTextField usernameField;
-    JPasswordField passwordField;
+    private JTextField usernameField;
+    private JPasswordField passwordField;
 
     public LoginFrame() {
         setTitle("Login");
-        setSize(300, 150);
+        setSize(300, 180);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
 
-        usernameField = new JTextField(15);
-        passwordField = new JPasswordField(15);
-        JButton loginBtn = new JButton("Login");
+        JPanel panel = new JPanel(new GridLayout(3, 2, 5, 5));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 2));
         panel.add(new JLabel("Usuário:"));
+        usernameField = new JTextField();
         panel.add(usernameField);
+
         panel.add(new JLabel("Senha:"));
+        passwordField = new JPasswordField();
         panel.add(passwordField);
+
+        JButton loginBtn = new JButton("Entrar");
+        panel.add(new JLabel()); // espaço vazio
         panel.add(loginBtn);
 
-        add(panel);
+        add(panel, BorderLayout.CENTER);
 
         loginBtn.addActionListener(e -> login());
 
@@ -43,26 +47,43 @@ public class LoginFrame extends JFrame {
     }
 
     private void login() {
-        String username = usernameField.getText();
+        String username = usernameField.getText().trim();
         String password = new String(passwordField.getPassword());
 
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Preencha usuário e senha.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         try (Connection conn = DBConnection.getConnection()) {
-            String query = "SELECT * FROM user WHERE username = ? AND password = ?";
-            PreparedStatement stmt = conn.prepareStatement(query);
+            String sql = "SELECT username, password, role FROM GateFlux.user WHERE username = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
-            stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                dispose();
-                new AuditFrame();
+                String dbPassword = rs.getString("password");
+                int role = rs.getInt("role");
+
+                // Aqui, para simplicidade, comparo a senha diretamente (ideal usar hash)
+                if (password.equals(dbPassword)) {
+                    JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
+                    dispose();
+                    new AuditFrame(username, role);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Senha incorreta.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Login inválido");
+                JOptionPane.showMessageDialog(this, "Usuário não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Erro na conexão com o banco");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro ao conectar no banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
-}
 
+    public static void main(String[] args) {
+        // Apenas para rodar direto o LoginFrame
+        SwingUtilities.invokeLater(LoginFrame::new);
+    }
+}
