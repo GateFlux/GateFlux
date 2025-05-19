@@ -4,10 +4,11 @@
  */
 package src.gateflux;
 
-/**
- *
- * @author isaque
- */
+//implementa uma interface gráfica em Java usando Swing para gerenciar registros de auditoria armazenados em um banco de dados, exibindo-os em uma tabela
+//com colunas como ID, data de criação, pessoa, serviço, horário de início, fim e status; ele oferece funcionalidades para adicionar, editar, excluir e
+//aprovar registros, controlando o acesso a essas ações com base no nível de permissão do usuário (role), além de possibilitar o logout e atualizar
+//dinamicamente os dados da tabela após cada operação, tudo isso integrado a uma conexão com o banco via JDBC.
+
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;

@@ -4,10 +4,10 @@
  */
 package src.gateflux;
 
-/**
- *
- * @author isaque
- */
+//Este código define uma classe chamada DBConnection que fornece um método estático getConnection() para estabelecer uma conexão com um banco de dados MySQL
+//usando JDBC. O método utiliza os dados de URL, usuário e senha (que devem ser preenchidos) para retornar uma instância de Connection. Ele é útil para 
+//centralizar e reutilizar a lógica de conexão com o banco de dados em uma aplicação Java.
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

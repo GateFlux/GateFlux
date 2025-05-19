@@ -18,3 +18,7 @@
         </dependency>
     </dependencies>
 </project>
+
+<!-- Este arquivo é um POM do Maven que configura um projeto Java chamado "gateflux" na versão 1.0-SNAPSHOT, definindo que o código será compilado para a 
+versão 21 do Java, empacotado como um arquivo JAR, especificando a classe principal do programa para execução automática, e inclui a dependência do conector
+MySQL (mysql-connector-j) na versão 8.0.33 para permitir a conexão com bancos de dados MySQL. -->

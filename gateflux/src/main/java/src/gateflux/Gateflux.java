@@ -4,10 +4,8 @@
 
 package src.gateflux;
 
-/**
- *
- * @author isaque
- */
+//Inicializa a aplicação chamando a tela de login
+
 public class Gateflux {
     public static void main(String[] args) {
         // Garante que a interface gráfica será criada na thread de eventos do Swing

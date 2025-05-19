@@ -4,10 +4,12 @@
  */
 package src.gateflux;
 
-/**
- *
- * @author isaque
- */
+//cria uma interface gráfica de login em Java usando Swing, onde o usuário insere nome de usuário e senha, que são validados contra registros armazenados em
+//um banco de dados via JDBC; se o login for bem-sucedido (comparando a senha inserida com a do banco, embora sem uso de hash para segurança), a janela de 
+//login é fechada e abre-se a interface principal de auditoria (AuditFrame) com as permissões correspondentes ao papel (role) do usuário, enquanto mensagens
+//de erro são exibidas caso o usuário não seja encontrado, a senha esteja incorreta ou haja problemas na conexão com o banco.
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
